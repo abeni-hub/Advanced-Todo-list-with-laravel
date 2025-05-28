@@ -3,6 +3,23 @@
 @section('content')
     <h1>Todo List</h1>
 
+    <!-- Reminders -->
+    @if ($reminders->isNotEmpty())
+        <div class="alert alert-warning text-center">
+            <h4>Upcoming Due Dates</h4>
+            <ul class="list-unstyled mb-0">
+                @foreach ($reminders as $reminder)
+                    <li>
+                        <strong>{{ $reminder->title }}</strong> is due on {{ $reminder->due_date->format('Y-m-d') }}
+                        @if ($reminder->due_date->isToday())
+                            <span class="badge bg-danger ms-2">Today</span>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="mb-3 text-center">
         <a href="{{ route('todos.completed') }}" class="btn btn-info">
             <i class="fas fa-check-circle me-1"></i> View Completed Todos
